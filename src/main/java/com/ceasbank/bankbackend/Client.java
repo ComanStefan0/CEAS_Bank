@@ -8,33 +8,33 @@ import jakarta.persistence.Id;
 public class Client {
 
     @Id
-    private String Id;
-    private String FirstName;
-    private String LastName;
-    private String CNP;
+    private String id;
+    private String firstName;
+    private String lastName;
+    private String cnp;
     private double sold = 0;
 
     public Client() {
     }
 
-    public Client(String ID, String firstName, String lastName, String CNP, double sold) {
-        this.Id = ID;
-        this.FirstName = firstName;
-        this.LastName = lastName;
-        this.CNP = CNP;
+    public Client(String id, String firstName, String lastName, String cnp, double sold) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.cnp = cnp;
         this.sold = sold;
     }
 
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
-    public String getCNP() {
-        return CNP;
+    public String getCnp() {
+        return cnp;
     }
 
     public double getSold() {
@@ -45,11 +45,11 @@ public class Client {
         this.sold = sold;
     }
 
-    public void setId(String ID) {
-        this.Id = ID;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getId() {
-        return Id;
+        return id;
     }
 }
