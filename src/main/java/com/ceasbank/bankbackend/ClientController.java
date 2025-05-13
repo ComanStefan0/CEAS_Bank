@@ -61,7 +61,7 @@ public class ClientController {
         String password = body.get("password");
 
         Optional<Client> clientOpt = clientRepository.findById(id);
-        if (!clientOpt.isPresent()) {
+        if (clientOpt.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Utilizatorul cu acest ID nu a fost găsit.");
         }
 
@@ -72,7 +72,7 @@ public class ClientController {
 
         Credentials credentials = new Credentials(id, username, hashedPassword);
         credentialsRepository.save(credentials);
-        
+
         return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully!");
     }
 
@@ -90,5 +90,11 @@ public class ClientController {
         }
 
         return "Autentificare reușită!";
+    }
+
+    @GetMapping("/{id}")
+    public Client getClient(@PathVariable String id) {
+        return clientRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Clientul nu există"));
     }
 }
