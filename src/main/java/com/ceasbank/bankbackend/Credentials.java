@@ -7,11 +7,11 @@ import jakarta.persistence.Id;
 public class Credentials {
 
     @Id
-    private String id;  
-    private String username;  
-    private String password;  
+    private String id;  // ID-ul utilizatorului
+    private String username;  // Numele de utilizator
+    private String password;  // Parola criptată
 
-   
+    // Constructori, getter/setter
     public Credentials() {}
 
     public Credentials(String id, String username, String password) {

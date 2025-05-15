@@ -3,7 +3,7 @@ package com.ceasbank.bankbackend;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-
+//lalala
 @Service
 public class ClientService {
 
@@ -11,6 +11,7 @@ public class ClientService {
     public ClientService(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
     }
+
 
     public String depunere(String id, double suma){
         Optional<Client> client = Optional.of(clientRepository.findById(id).orElseThrow(() -> new RuntimeException("Client not found") ));

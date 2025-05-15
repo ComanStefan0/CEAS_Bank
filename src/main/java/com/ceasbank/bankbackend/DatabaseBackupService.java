@@ -22,6 +22,7 @@ public class DatabaseBackupService {
                 statement.execute(sqlScript);
                 System.out.println("Backup a fost realizat cu succes: " + backupFilePath);
             }
+
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Eroare la realizarea backup-ului: " + e.getMessage());

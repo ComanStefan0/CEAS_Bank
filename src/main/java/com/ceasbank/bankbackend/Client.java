@@ -1,37 +1,38 @@
 package com.ceasbank.bankbackend;
-import jakarta.persistence.Entity;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 
 @Entity
-@Table(name = "UTILIZATOR")
+@Table(name = "Client")
 public class Client {
+
 
     @Id
     private String id;
-    private String firstName;
-    private String lastName;
+    private String nume;
+    private String prenume;
     private String cnp;
     private double sold = 0;
 
     public Client() {
     }
 
-    public Client(String id, String firstName, String lastName, String cnp, double sold) {
+    public Client(String id, String nume, String prenume, String cnp, double sold) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.nume = nume;
+        this.prenume = prenume;
         this.cnp = cnp;
         this.sold = sold;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getNume() {
+        return nume;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getPrenume() {
+        return prenume;
     }
 
     public String getCnp() {

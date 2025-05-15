@@ -5,13 +5,15 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Scanner;
+import com.google.gson.Gson;
+
 
 public class ConsolaInteractiva {
 
     private static final String BASE_URL = "http://localhost:8080/users";
     private static final HttpClient client = HttpClient.newHttpClient();
     private static final Scanner scanner = new Scanner(System.in);
-
+    //lalaala
     public static void main(String[] args) throws Exception {
         while (true) {
             System.out.println("\n1. Inregistrare\n2. Autentificare\n3. Iesire");
@@ -28,33 +30,38 @@ public class ConsolaInteractiva {
 
     private static void inregistrareCompleta() throws Exception {
         System.out.print("ID (6 cifre): ");
-        String id = scanner.nextLine();
+        String id = scanner.nextLine().trim();
         System.out.print("CNP (16 cifre): ");
-        String cnp = scanner.nextLine();
+        String cnp = scanner.nextLine().trim();
         System.out.print("Nume: ");
-        String nume = scanner.nextLine();
+        String nume = scanner.nextLine().trim();
         System.out.print("Prenume: ");
-        String prenume = scanner.nextLine();
+        String prenume = scanner.nextLine().trim();
         System.out.print("Username: ");
-        String username = scanner.nextLine();
+        String username = scanner.nextLine().trim();
         System.out.print("Parolă: ");
-        String password = scanner.nextLine();
+        String password = scanner.nextLine().trim();
 
-        // Verifică dacă username-ul există deja
+        System.out.println("Debug - ID: " + id);
+        System.out.println("Debug - CNP: " + cnp);
+        System.out.println("Debug - Nume: " + nume);
+        System.out.println("Debug - Prenume: " + prenume);
+        System.out.println("Debug - Username: " + username);
+        System.out.println("Debug - Parolă: " + password);
+
         if (verificaUsernameExistente(username)) {
             System.out.println("Username-ul există deja! Alege un alt username.");
             return;
         }
 
-
-        String userJson = String.format(""" 
-        {
-            "id":"%s",
-            "cnp":"%s",
-            "nume":"%s",
-            "prenume":"%s",
-            "sold":0.0
-        }""", id, cnp, nume, prenume);
+        String userJson = String.format("""
+    {
+        "id":"%s",
+        "cnp":"%s",
+        "nume":"%s",
+        "prenume":"%s",
+        "sold":0.0
+    }""", id, cnp, nume, prenume);
 
         HttpRequest reqUtilizator = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + "/adauga"))
@@ -63,14 +70,22 @@ public class ConsolaInteractiva {
                 .build();
 
         HttpResponse<String> respUtilizator = client.send(reqUtilizator, HttpResponse.BodyHandlers.ofString());
+        System.out.println("Raw response: " + respUtilizator.body()); // Debug the raw response
+        Gson gson = new Gson();
+        Client savedUtilizator = gson.fromJson(respUtilizator.body(), Client.class); // Map directly to Utilizator
+        if (savedUtilizator != null) {
+            System.out.println("Utilizator salvat - Nume: " + savedUtilizator.getNume() + ", Prenume: " + savedUtilizator.getPrenume());
+        } else {
+            System.out.println("Failed to parse Utilizator from response");
+        }
         System.out.println("Utilizator: " + respUtilizator.body());
 
         String credentialsJson = String.format("""
-        {
-            "id":"%s",
-            "username":"%s",
-            "password":"%s"
-        }""", id, username, password);
+    {
+        "id":"%s",
+        "username":"%s",
+        "password":"%s"
+    }""", id, username, password);
 
         HttpRequest reqCreds = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + "/register"))
