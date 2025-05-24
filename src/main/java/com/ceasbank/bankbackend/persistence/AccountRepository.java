@@ -1,9 +1,8 @@
-package com.ceasbank.bankbackend;
+package com.ceasbank.bankbackend.persistence;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-
 @Repository
-public interface ClientRepository extends JpaRepository<Client, String> {
+public interface AccountRepository extends JpaRepository<Account, Long> {
 }
-

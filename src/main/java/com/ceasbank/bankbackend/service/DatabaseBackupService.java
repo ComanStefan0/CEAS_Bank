@@ -1,7 +1,8 @@
-package com.ceasbank.bankbackend;
+package com.ceasbank.bankbackend.service;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
