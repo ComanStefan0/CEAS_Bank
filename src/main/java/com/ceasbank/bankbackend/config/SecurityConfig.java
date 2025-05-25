@@ -40,7 +40,7 @@ public class SecurityConfig {
                                 "/users/",
                                 "/users/**",
                                 "/h2-console/**",
-                                "/signup",
+                                "/users/signup",
                                 "/login",
                                 "/account/**",
                                 "/error"

@@ -2,13 +2,13 @@ package com.ceasbank.bankbackend.controller;
 
 import com.ceasbank.bankbackend.persistence.Account;
 import com.ceasbank.bankbackend.service.AccountService;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users/{clientId}/account")
@@ -52,7 +52,6 @@ public class AccountController {
     @PutMapping("/{accountId}")
     public Account accountOperation(@PathVariable Long accountId, @RequestBody double amount ) {
         return accountService.accountOperation(accountId, amount);
-
     }
 
     @Operation(

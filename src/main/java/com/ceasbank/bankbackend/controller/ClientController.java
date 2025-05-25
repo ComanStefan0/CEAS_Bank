@@ -1,5 +1,7 @@
 package com.ceasbank.bankbackend.controller;
 
+import com.ceasbank.bankbackend.dto.ClientRequestDTO;
+import com.ceasbank.bankbackend.dto.ClientResponseDTO;
 import com.ceasbank.bankbackend.persistence.Client;
 import com.ceasbank.bankbackend.service.ClientService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,7 +28,7 @@ public class ClientController {
             @ApiResponse(responseCode = "404", description = "Client not found")
     })
     @GetMapping("/{clientId}")
-    public Client getClient(Long clientId) {
+    public ClientResponseDTO getClient(Long clientId) {
         return clientService.getClientById(clientId);
     }
 
@@ -40,9 +42,9 @@ public class ClientController {
             @ApiResponse(responseCode = "400", description = "Invalid input data",
                     content = @Content)
     })
-    @PostMapping
-    public Client adaugaUtilizator(@RequestBody Client client) {
-        return clientService.saveClient(client);
+    @PostMapping("/signup")
+    public ClientResponseDTO adaugaUtilizator(@RequestBody ClientRequestDTO clientRequestDTO) {
+        return clientService.saveClient(clientRequestDTO);
     }
 
     @Operation(
