@@ -42,7 +42,8 @@ public class SecurityConfig {
                                 "/h2-console/**",
                                 "/signup",
                                 "/login",
-                                "/account/**"
+                                "/account/**",
+                                "/error"
                         ).permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().authenticated()

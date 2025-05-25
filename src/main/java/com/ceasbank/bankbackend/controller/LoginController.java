@@ -50,12 +50,7 @@ public class LoginController {
     public ResponseEntity<String> registerUser(@RequestBody Map<String, String> body) {
         String username = body.get("username");
         String password = body.get("password");
-        Long id = parseLong(body.get("id"));
 
-        Optional<Client> utilizatorOpt = clientService.findById(id);
-        if (!utilizatorOpt.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Utilizatorul cu acest ID nu a fost găsit.");
-        }
         if (credentialsService.findByUsername(username).isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists");
         }

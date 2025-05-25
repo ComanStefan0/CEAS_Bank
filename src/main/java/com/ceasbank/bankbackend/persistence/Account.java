@@ -1,5 +1,7 @@
 package com.ceasbank.bankbackend.persistence;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,8 +17,13 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(optional = false) // 'optional = false' implies client_id can't be null
-    @JoinColumn(name = "client_id", nullable = false)
-    private Client client;
+
     private double balance;
+
+    @OneToOne
+    @JoinColumn(name = "client_id", nullable = false, unique = true)
+    @JsonBackReference
+    @Schema(implementation = Account.class)
+    private Client client;
+
 }

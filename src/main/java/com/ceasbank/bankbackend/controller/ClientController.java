@@ -2,11 +2,13 @@ package com.ceasbank.bankbackend.controller;
 
 import com.ceasbank.bankbackend.persistence.Client;
 import com.ceasbank.bankbackend.service.ClientService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
@@ -15,8 +17,44 @@ public class ClientController {
 
     private final ClientService clientService;
 
+    @Operation(
+            summary = "Get client by ID",
+            description = "Retrieves the client details based on the specified client ID."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Client retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "Client not found")
+    })
+    @GetMapping("/{clientId}")
+    public Client getClient(Long clientId) {
+        return clientService.getClientById(clientId);
+    }
+
+    @Operation(
+            summary = "Create a new client and their account",
+            description = "Registers a new client and automatically creates an associated bank account with a 0 balance."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Client successfully created",
+                    content = @Content(schema = @Schema(implementation = Client.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid input data",
+                    content = @Content)
+    })
     @PostMapping
     public Client adaugaUtilizator(@RequestBody Client client) {
         return clientService.saveClient(client);
+    }
+
+    @Operation(
+            summary = "Delete a client and their account",
+            description = "Deletes the client with the specified ID along with their associated account."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Client and associated account deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "Client not found")
+    })
+    @DeleteMapping("/{clientId}")
+    public void deleteUtilizator(@PathVariable Long clientId) {
+        clientService.deleteClient(clientId);
     }
 }

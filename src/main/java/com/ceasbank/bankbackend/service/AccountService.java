@@ -1,5 +1,7 @@
 package com.ceasbank.bankbackend.service;
 
+import com.ceasbank.bankbackend.exception.AccountNotFoundException;
+import com.ceasbank.bankbackend.exception.InsufficientBalanceException;
 import com.ceasbank.bankbackend.persistence.Account;
 import com.ceasbank.bankbackend.persistence.AccountRepository;
 import lombok.AllArgsConstructor;
@@ -11,48 +13,54 @@ import java.util.Optional;
 @AllArgsConstructor
 public class AccountService {
 
-    private static final String ACCOUNT_NOT_FOUND = "Account not found";
+    private static final String ACCOUNT_NOT_FOUND = "Account with id %d not found";
+    private static final String INSUFFICIENT_FUNDS = "Insufficient funds on account ID %d for operation of %.2f.";
     private final AccountRepository accountRepository;
 
-    public Account saveAccount(Account account) {
-        return accountRepository.save(account);
+    public Account findByAccountId(Long accountId) {
+        Optional<Account> account = Optional.of(
+                accountRepository.findById(accountId)
+                        .orElseThrow(() -> new AccountNotFoundException(
+                                String.format(ACCOUNT_NOT_FOUND, accountId))));
+        return account.get();
     }
 
-    public String depunere(Long id, double suma){
-        Optional<Account> account = Optional.of(accountRepository.findById(id).orElseThrow(() -> new RuntimeException(ACCOUNT_NOT_FOUND) ));
-        account.get().setBalance(account.get().getBalance() + suma);
-        accountRepository.save(account.get());
-
-        return "Depunere reusita";
+    public Account getByClientId(Long clientId) {
+        Optional<Account> account = Optional.of(
+                accountRepository.findByClient_Id(clientId)
+                        .orElseThrow(() -> new AccountNotFoundException(
+                                String.format(ACCOUNT_NOT_FOUND, clientId))));
+        return account.get();
     }
 
-    public String retragere(Long id, double suma){
-        Optional<Account> account = Optional.of(accountRepository.findById(id).orElseThrow(() -> new RuntimeException(ACCOUNT_NOT_FOUND) ));
-
-        if(account.get().getBalance() < suma){
-            throw new RuntimeException("Fonduri insuficiente");
+    public Account accountOperation(Long accountId, double suma) {
+        Account account = findByAccountId(accountId);
+        if(account.getBalance() + suma < 0) {
+            throw new InsufficientBalanceException(
+                    String.format(INSUFFICIENT_FUNDS, accountId, suma));
         }
-        account.get().setBalance(account.get().getBalance()-suma);
-        accountRepository.save(account.get());
+        account.setBalance(account.getBalance() + suma);
+        accountRepository.save(account);
 
-        return "Retragere reusita";
+        return account;
     }
 
+    public Account transfer(Long senderAccId, Long receiverAccId, double suma) {
+        Account senderAcc = findByAccountId(senderAccId);
+        Account receiverAcc = findByAccountId(receiverAccId);
 
-    public String transfer(Long senderAccId, Long receiverAccId, double suma){
-        Optional<Account> senderAcc = Optional.of(accountRepository.findById(senderAccId).orElseThrow(() -> new RuntimeException(ACCOUNT_NOT_FOUND) ));
-        Optional<Account> receiverAcc = Optional.of(accountRepository.findById(receiverAccId).orElseThrow(() -> new RuntimeException(ACCOUNT_NOT_FOUND) ));
 
-        if(senderAcc.get().getBalance() < suma){
-            throw new RuntimeException("Fonduri insuficiente");
+        if(senderAcc.getBalance() < suma) {
+            throw new InsufficientBalanceException(
+                    String.format(INSUFFICIENT_FUNDS, senderAccId, suma));
         }
 
-        senderAcc.get().setBalance(senderAcc.get().getBalance()-suma);
-        accountRepository.save(senderAcc.get());
+        senderAcc.setBalance(senderAcc.getBalance()-suma);
+        accountRepository.save(senderAcc);
 
-        receiverAcc.get().setBalance(receiverAcc.get().getBalance()+suma);
-        accountRepository.save(receiverAcc.get());
+        receiverAcc.setBalance(receiverAcc.getBalance()+suma);
+        accountRepository.save(receiverAcc);
 
-        return "Transfer reusit";
+        return senderAcc;
     }
 }
