@@ -35,7 +35,7 @@ public class AccountController {
     @ApiResponse(responseCode = "200", description = "Account retrieved successfully",
             content = @Content(schema = @Schema(implementation = Account.class)))
     @GetMapping("/{accountId}")
-    public Account getAccount(@PathVariable Long accountId) {
+    public Account getAccount(@PathVariable("accountId") Long accountId) {
         return accountService.findByAccountId(accountId);
     }
 
@@ -50,7 +50,8 @@ public class AccountController {
                     content = @Content)
     })
     @PutMapping("/{accountId}")
-    public Account accountOperation(@PathVariable Long accountId, @RequestBody double amount ) {
+    public Account accountOperation(@PathVariable("accountId") Long accountId, @RequestBody double amount ) {
+
         return accountService.accountOperation(accountId, amount);
     }
 
@@ -64,8 +65,9 @@ public class AccountController {
             @ApiResponse(responseCode = "400", description = "Insufficient funds or invalid accounts",
                     content = @Content)
     })
-    @PostMapping("/{accountId}/transfer/{destAccId}")
-    public Account transferUtilizator(@PathVariable Long accountId, @PathVariable Long destAccId, @RequestBody double amount) {
-        return accountService.transfer(accountId, destAccId, amount);
+    @PostMapping("/{accountId}/transfer")
+    public Account transfer(@PathVariable("accountId") Long senderId, @PathVariable("clientId") Long destAccId, @RequestBody double amount) {
+
+        return accountService.transfer(senderId, destAccId, amount);
     }
 }

@@ -27,7 +27,7 @@ public class AccountService {
 
     public Account getByClientId(Long clientId) {
         Optional<Account> account = Optional.of(
-                accountRepository.findByClient_Id(clientId)
+                accountRepository.findByClientId(clientId)
                         .orElseThrow(() -> new AccountNotFoundException(
                                 String.format(ACCOUNT_NOT_FOUND, clientId))));
         return account.get();

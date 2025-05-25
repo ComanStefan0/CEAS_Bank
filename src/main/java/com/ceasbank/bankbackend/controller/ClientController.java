@@ -28,7 +28,7 @@ public class ClientController {
             @ApiResponse(responseCode = "404", description = "Client not found")
     })
     @GetMapping("/{clientId}")
-    public ClientResponseDTO getClient(Long clientId) {
+    public ClientResponseDTO getClient(@PathVariable Long clientId) {
         return clientService.getClientById(clientId);
     }
 
@@ -43,7 +43,7 @@ public class ClientController {
                     content = @Content)
     })
     @PostMapping("/signup")
-    public ClientResponseDTO adaugaUtilizator(@RequestBody ClientRequestDTO clientRequestDTO) {
+    public ClientResponseDTO addClient(@RequestBody ClientRequestDTO clientRequestDTO) {
         return clientService.saveClient(clientRequestDTO);
     }
 
@@ -56,7 +56,7 @@ public class ClientController {
             @ApiResponse(responseCode = "404", description = "Client not found")
     })
     @DeleteMapping("/{clientId}")
-    public void deleteUtilizator(@PathVariable Long clientId) {
+    public void deleteClient(@PathVariable Long clientId) {
         clientService.deleteClient(clientId);
     }
 }

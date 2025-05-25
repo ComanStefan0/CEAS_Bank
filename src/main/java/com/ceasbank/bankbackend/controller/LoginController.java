@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -39,9 +38,9 @@ public class LoginController {
                     new UsernamePasswordAuthenticationToken(userLoginDTO.getUsername(), userLoginDTO.getPassword())
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            return ResponseEntity.ok("Autentificare reușită!");
+            return ResponseEntity.ok("your account has been logged in!");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Autentificare eșuată: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("you didn't login!" + e.getMessage());
         }
     }
 }
