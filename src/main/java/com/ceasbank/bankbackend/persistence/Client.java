@@ -5,6 +5,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
 
+/**
+ * Entitate care reprezinta clientul bancar in sistem.
+ *
+ * Fiecare client are informatii personale, credentiale de logare
+ * si este asociat cu un cont bancar
+ */
+
 @Entity
 @Table(name = "Client")
 @Builder
@@ -14,6 +21,9 @@ import lombok.*;
 @AllArgsConstructor
 public class Client {
 
+    /**
+     * ID-ul unic al clientului. Este un generat automat.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,6 +35,12 @@ public class Client {
     private String username;
     private String password;
 
+    /**
+     * Contul bancar asociat clientului.
+     *
+     * Relatie unul la unul mapat invers din clasa {@link Account}
+     * Se gestioneaza automat prin cascade si se elimina daca clientul este sters.
+     */
     @OneToOne(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     @Schema(hidden = true)

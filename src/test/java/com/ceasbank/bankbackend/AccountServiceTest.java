@@ -17,6 +17,16 @@ import java.util.Optional;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * Teste unitare pentru clasa {@link AccountService}
+ *
+ * Se foloseste Mockito pentru a simula comportamenul repository-ului
+ * si JUnit pentru a verifica logica de business a operatiilor pe conturi:
+ * - cautare cont,
+ * - operatii de depunere/retragere
+ * - transferuri intre conturi
+ * - si tratarea exceptiilor
+ */
 class AccountServiceTest {
 
     @Mock
@@ -25,6 +35,9 @@ class AccountServiceTest {
     @InjectMocks
     private AccountService accountService;
 
+    /**
+     * Creeaza mock-urile inainte de fiecare test.
+     */
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -32,6 +45,8 @@ class AccountServiceTest {
 
     @Test
     void findByAccountId_shouldReturnAccount() {
+        /** Verifica daca metoda returneaza contul corect dupa ID
+        */
         Account acc = Account.builder().id(1L).balance(100.0).build();
         when(accountRepository.findById(1L)).thenReturn(Optional.of(acc));
 
@@ -43,6 +58,8 @@ class AccountServiceTest {
 
     @Test
     void findByAccountId_shouldThrowIfNotFound() {
+        /** Verifica daca se arunca exceptia cand contul nu exista.
+        */
         when(accountRepository.findById(99L)).thenReturn(Optional.empty());
 
         Assertions.assertThrows(AccountNotFoundException.class, () -> accountService.findByAccountId(99L));
@@ -50,6 +67,10 @@ class AccountServiceTest {
 
     @Test
     void getByClientId_shouldReturnAccount() {
+        /**
+          * Verifica daca se arunca exceptia cand contul nu exista
+          */
+
         Account acc = Account.builder().id(2L).balance(200.0).build();
         when(accountRepository.findByClientId(5L)).thenReturn(Optional.of(acc));
 
@@ -61,6 +82,8 @@ class AccountServiceTest {
 
     @Test
     void getByClientId_shouldThrowIfNotFound() {
+        /** Verifica returnarea contului dupa ID-ul clientului
+        */
         when(accountRepository.findByClientId(999L)).thenReturn(Optional.empty());
 
         Assertions.assertThrows(AccountNotFoundException.class, () -> accountService.getByClientId(999L));
@@ -68,6 +91,8 @@ class AccountServiceTest {
 
     @Test
     void accountOperation_shouldDepositSuccessfully() {
+        /** Verifica pentru depunere reusita in cont
+         */
         Account acc = Account.builder().id(1L).balance(100.0).build();
         when(accountRepository.findById(1L)).thenReturn(Optional.of(acc));
 
@@ -79,6 +104,8 @@ class AccountServiceTest {
 
     @Test
     void accountOperation_shouldWithdrawSuccessfully() {
+        /** Test pentru retragere reusita in cont
+        */
         Account acc = Account.builder().id(1L).balance(100.0).build();
         when(accountRepository.findById(1L)).thenReturn(Optional.of(acc));
 
@@ -90,6 +117,8 @@ class AccountServiceTest {
 
     @Test
     void accountOperation_shouldThrowIfInsufficientBalance() {
+        /** Verifica daca retragerea peste sold arunca exceptia
+         */
         Account acc = Account.builder().id(1L).balance(20.0).build();
         when(accountRepository.findById(1L)).thenReturn(Optional.of(acc));
 
@@ -98,6 +127,8 @@ class AccountServiceTest {
 
     @Test
     void transfer_shouldWorkCorrectly() {
+        /** Test pentru transfer reusit intre conturi
+        */
         Account sender = Account.builder().id(1L).balance(100.0).build();
         Account receiver = Account.builder().id(2L).balance(50.0).build();
 
@@ -115,6 +146,10 @@ class AccountServiceTest {
 
     @Test
     void transfer_shouldThrowIfSenderHasInsufficientFunds() {
+        /**
+         * Verifica daca se arunca exceptie cand expeditorul nu are bani suficienti
+         */
+
         Account sender = Account.builder().id(1L).balance(10.0).build();
         Account receiver = Account.builder().id(2L).balance(50.0).build();
 
@@ -126,6 +161,9 @@ class AccountServiceTest {
 
     @Test
     void transfer_shouldThrowIfAnyAccountNotFound() {
+        /**
+         *  Verifica daca se arunca exceptie cand un cont implicat nu exista
+         */
         when(accountRepository.findById(1L)).thenReturn(Optional.empty());
 
         Assertions.assertThrows(AccountNotFoundException.class, () -> accountService.transfer(1L, 2L, 10.0));

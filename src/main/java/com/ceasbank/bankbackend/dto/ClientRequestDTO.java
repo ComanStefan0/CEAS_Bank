@@ -2,6 +2,12 @@ package com.ceasbank.bankbackend.dto;
 
 import lombok.*;
 
+/**
+ * DTO pentru trimiterea datelor necesare la crearea unui client nou.
+ *
+ * Este folosit in cererile pentru inregistrarea unui client
+ */
+
 @Builder
 @Setter
 @Getter

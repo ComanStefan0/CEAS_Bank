@@ -22,6 +22,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
+/**
+ * Teste unitare pentru clasa {@link ClientService}.
+ *
+ * verifica comportamentul serviciului de gestionare a clientilor inclusiv
+ * - inregistrarea unui client nou si crearea contului asociat
+ * - tratarea cazului în care username-ul exista deja
+ * - obtinerea datelor unui client dupa ID
+ * - stergerea unui client
+ * - si gestionarea exceptiilor corespunzatoare
+ */
 class ClientServiceTest {
 
     @Mock
@@ -36,11 +46,17 @@ class ClientServiceTest {
     @InjectMocks
     private ClientService clientService;
 
+    /**
+     * Initializeaza mock-urile inainte de rularea fiecarui test.
+     */
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
+    /**
+     * Testeaza salvarea unui client nou impreuna cu crearea contului bancar
+     */
     @Test
     void saveClient_shouldCreateClientAndAccount() {
         // Given
@@ -73,6 +89,9 @@ class ClientServiceTest {
         verify(accountRepository).save(any(Account.class));
     }
 
+    /**
+     * Testeaza cazul in care se incearca salvarea unui client cu username deja existent.
+     */
     @Test
     void saveClient_shouldThrowExceptionIfUsernameExists() {
         // Given
@@ -83,6 +102,9 @@ class ClientServiceTest {
         assertThrows(ClientAlreadyExistsException.class, () -> clientService.saveClient(request));
     }
 
+    /**
+     * Testeaza returnarea datelor unui client pe baza ID-ului
+     */
     @Test
     void getClientById_shouldReturnClientDetails() {
         // Given
@@ -104,6 +126,9 @@ class ClientServiceTest {
         assertEquals("1234567890123", result.getCnp());
     }
 
+    /**
+     * Testeaza cazul in care clientul cautat nu este gasit
+     */
     @Test
     void getClientById_shouldThrowIfNotFound() {
         // Given
@@ -113,6 +138,9 @@ class ClientServiceTest {
         assertThrows(ClientNotFoundException.class, () -> clientService.getClientById(99L));
     }
 
+    /**
+     * Testeaza stergerea unui client pe baza ID-ului.
+     */
     @Test
     void deleteClient_shouldDeleteClientById() {
         // When

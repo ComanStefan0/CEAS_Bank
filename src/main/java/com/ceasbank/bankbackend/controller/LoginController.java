@@ -15,6 +15,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller responsabil de autentificarea utilizatorilor
+ *
+ * Expune endpointul /login care primeste un username si o parola
+ * si verifica daca acestea sunt valide
+ */
 
 @RestController
 @AllArgsConstructor
@@ -22,6 +28,11 @@ public class LoginController {
 
     private final AuthenticationManager authenticationManager;
 
+    /**
+     * Autentifica un utilizator pe baza credentialelor
+     * @param userLoginDTO obiect care contine username-ul si parola introduse de utlizator
+     * @return mesaj de succes daca autentificarea reuseste, sau mesaj de eroare daca nu functioneaza
+     */
     @Operation(
             summary = "User login",
             description = "Authenticates a user based on the provided username and password. Returns a success message upon successful authentication."

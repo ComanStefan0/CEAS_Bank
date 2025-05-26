@@ -17,14 +17,40 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
+/**
+ * Configuratia de securitate pentru aplicatia CEAS Bank
+ *
+ * Aceasta clasa contine:
+ * -Securitatea HTTP
+ * -CORS
+ * -CSRF
+ * -Encoder-ul de parole
+ * -Managerul de autentificare
+ */
+
 @Configuration
 public class SecurityConfig {
 
+    /**
+     * Realizeaza un encoder de parole care foloseste algoritmul BCrypt
+     *
+     * @return un obiect {@link PasswordEncoder}
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Se creeaza regulile de securitate pentru cererile HTTP.
+     *  - Permite accesul public la anumite rute (ex: Swagger, signup, login)
+     *  - Necesita autentificare pentru restul rutelor
+     *  - Dezactiveaza CSRF si FrameOptions
+     *
+     * @param http obiectul HttpSecurity folosit pentru configurare
+     * @return lantul de filtre de securitate
+     * @throws Exception daca apare o eroare la configurare
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -52,6 +78,11 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /**
+     * Configureaza setarile CORS pentru a permite cereri din orice origine.
+     *
+     * @return sursa de configuratie CORS
+     */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
@@ -65,6 +96,13 @@ public class SecurityConfig {
         return source;
     }
 
+    /**
+     * Expune managerul de autentificare ca un bean Spring.
+     *
+     * @param config obiectul {@link AuthenticationConfiguration}
+     * @return managerul de autentificare
+     * @throws Exception daca apare o eroare la obtinerea managerului
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();

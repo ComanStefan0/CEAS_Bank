@@ -12,6 +12,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller REST care gestioneaza operatiile legate clienti.
+ *
+ * Include functionalitati pentru: obtinerea, adaugarea si stergerea unui client.
+ * Toate rutele sunt accesibile prin prefixul /users.
+ */
+
 @RestController
 @RequestMapping("/users")
 @AllArgsConstructor
@@ -19,6 +26,12 @@ public class ClientController {
 
     private final ClientService clientService;
 
+    /**
+     * Returneaza informatii despre un client, pe baza ID-ului specificat.
+     *
+     * @param clientId id-ul clientului
+     * @return obiectul {@link ClientResponseDTO} cu datele clientului
+     */
     @Operation(
             summary = "Get client by ID",
             description = "Retrieves the client details based on the specified client ID."
@@ -31,6 +44,13 @@ public class ClientController {
     public ClientResponseDTO getClient(@PathVariable Long clientId) {
         return clientService.getClientById(clientId);
     }
+
+    /**
+     * Creeaza un nou client si contul bancar asociat acestuia
+     *
+     * @param clientRequestDTO obiect care contine informatiile necesare pentru inregistrare
+     * @return obiectul {@link ClientResponseDTO} cu datele clientului creat
+     */
 
     @Operation(
             summary = "Create a new client and their account",
@@ -47,6 +67,11 @@ public class ClientController {
         return clientService.saveClient(clientRequestDTO);
     }
 
+    /**
+     * Sterge un client si contul asociat acestuia.
+     *
+     * @param clientId ID-ul clientului de sters.
+     */
     @Operation(
             summary = "Delete a client and their account",
             description = "Deletes the client with the specified ID along with their associated account."
