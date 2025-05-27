@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * Clasa care face operatiunile legate de clienti
+ */
 @Service
 @AllArgsConstructor
 public class ClientService {
@@ -26,6 +29,12 @@ public class ClientService {
     private final ClientRepository clientRepository;
     private final AccountRepository accountRepository;
 
+    /**
+     * Retine clientul nou in sistem si creeaza automat un cont pentru el
+     * @param clientRequestDTO datele clientului de la utilizator (nume,prenume,cnp,etc)
+     * @return un obiect cu datele clientului salvat (fara parola)
+     * @throws ClientAlreadyExistsException daca exista deja un client cu acelasi username
+     */
     public ClientResponseDTO saveClient(ClientRequestDTO clientRequestDTO) {
         Optional <Client> existingClient = clientRepository.findByUsername(clientRequestDTO.getUsername());
         if (existingClient.isPresent()) {
@@ -57,6 +66,12 @@ public class ClientService {
                 .build();
     }
 
+    /**
+     * Cauta un client dupa id-ul sau
+     * @param clientId ID-ul clientului
+     * @return datele clientului (nume,prenume,cnp)
+     * @throws ClientNotFoundException daca clientul nu a fost gasit
+     */
     public ClientResponseDTO getClientById(Long clientId) {
         Optional<Client> optionalClient = Optional.of(
                 clientRepository.findById(clientId)
@@ -70,6 +85,10 @@ public class ClientService {
                 .build();
     }
 
+    /**
+     * Sterge un client din sistem dupa id-ul respectiv
+     * @param clientId id-ul clientului care urmeaza sa fie sters
+     */
     @Transactional
     public void deleteClient(Long clientId) {
         clientRepository.deleteById(clientId);
