@@ -4,7 +4,7 @@ import lombok.*;
 
 /**
  * DTO pentru trimiterea datelor necesare la crearea unui client nou.
- *
+ * <p>
  * Este folosit in cererile pentru inregistrarea unui client
  */
 

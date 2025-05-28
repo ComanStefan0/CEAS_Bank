@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 
 /**
  * Teste unitare pentru clasa {@link AccountService}
- *
+ * <p>
  * Se foloseste Mockito pentru a simula comportamenul repository-ului
  * si JUnit pentru a verifica logica de business a operatiilor pe conturi:
  * - cautare cont,
@@ -46,7 +46,7 @@ class AccountServiceTest {
     @Test
     void findByAccountId_shouldReturnAccount() {
         /** Verifica daca metoda returneaza contul corect dupa ID
-        */
+         */
         Account acc = Account.builder().id(1L).balance(100.0).build();
         when(accountRepository.findById(1L)).thenReturn(Optional.of(acc));
 
@@ -59,7 +59,7 @@ class AccountServiceTest {
     @Test
     void findByAccountId_shouldThrowIfNotFound() {
         /** Verifica daca se arunca exceptia cand contul nu exista.
-        */
+         */
         when(accountRepository.findById(99L)).thenReturn(Optional.empty());
 
         Assertions.assertThrows(AccountNotFoundException.class, () -> accountService.findByAccountId(99L));
@@ -68,8 +68,8 @@ class AccountServiceTest {
     @Test
     void getByClientId_shouldReturnAccount() {
         /**
-          * Verifica daca se arunca exceptia cand contul nu exista
-          */
+         * Verifica daca se arunca exceptia cand contul nu exista
+         */
 
         Account acc = Account.builder().id(2L).balance(200.0).build();
         when(accountRepository.findByClientId(5L)).thenReturn(Optional.of(acc));
@@ -83,7 +83,7 @@ class AccountServiceTest {
     @Test
     void getByClientId_shouldThrowIfNotFound() {
         /** Verifica returnarea contului dupa ID-ul clientului
-        */
+         */
         when(accountRepository.findByClientId(999L)).thenReturn(Optional.empty());
 
         Assertions.assertThrows(AccountNotFoundException.class, () -> accountService.getByClientId(999L));
@@ -105,7 +105,7 @@ class AccountServiceTest {
     @Test
     void accountOperation_shouldWithdrawSuccessfully() {
         /** Test pentru retragere reusita in cont
-        */
+         */
         Account acc = Account.builder().id(1L).balance(100.0).build();
         when(accountRepository.findById(1L)).thenReturn(Optional.of(acc));
 
@@ -128,7 +128,7 @@ class AccountServiceTest {
     @Test
     void transfer_shouldWorkCorrectly() {
         /** Test pentru transfer reusit intre conturi
-        */
+         */
         Account sender = Account.builder().id(1L).balance(100.0).build();
         Account receiver = Account.builder().id(2L).balance(50.0).build();
 

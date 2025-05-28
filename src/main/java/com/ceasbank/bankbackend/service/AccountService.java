@@ -37,6 +37,7 @@ public class AccountService {
 
     /**
      * Cauta un cont dupa ID-ul clientului.
+     *
      * @param clientId asociat clientului
      * @return contul asociat clientului
      * @throws AccountNotFoundException daca nu exista un cont pentru acel client
@@ -51,14 +52,15 @@ public class AccountService {
 
     /**
      * Se efectueaaza o operatiune pe cont (depunere/retragere)
+     *
      * @param accountId id-ul contului
-     * @param suma care se adauga (pe plus) sau se retrage (pe minus)
+     * @param suma      care se adauga (pe plus) sau se retrage (pe minus)
      * @return contul actualizat
      * @throws InsufficientBalanceException daca nu sunt bani suficienti pentru retragere
      */
     public Account accountOperation(Long accountId, double suma) {
         Account account = findByAccountId(accountId);
-        if(account.getBalance() + suma < 0) {
+        if (account.getBalance() + suma < 0) {
             throw new InsufficientBalanceException(
                     String.format(INSUFFICIENT_FUNDS, accountId, suma));
         }
@@ -70,9 +72,10 @@ public class AccountService {
 
     /**
      * Se transfera o suma de bani intre doua conturi
-     * @param senderAccId id-ul contului expeditor
+     *
+     * @param senderAccId   id-ul contului expeditor
      * @param receiverAccId id-ul contului destinatar
-     * @param suma care se transfera
+     * @param suma          care se transfera
      * @return contul expeditor actualizat
      * @throws InsufficientBalanceException daca expeditorul nu are bani suficienti
      */
@@ -81,15 +84,15 @@ public class AccountService {
         Account receiverAcc = findByAccountId(receiverAccId);
 
 
-        if(senderAcc.getBalance() < suma) {
+        if (senderAcc.getBalance() < suma) {
             throw new InsufficientBalanceException(
                     String.format(INSUFFICIENT_FUNDS, senderAccId, suma));
         }
 
-        senderAcc.setBalance(senderAcc.getBalance()-suma);
+        senderAcc.setBalance(senderAcc.getBalance() - suma);
         accountRepository.save(senderAcc);
 
-        receiverAcc.setBalance(receiverAcc.getBalance()+suma);
+        receiverAcc.setBalance(receiverAcc.getBalance() + suma);
         accountRepository.save(receiverAcc);
 
         return senderAcc;

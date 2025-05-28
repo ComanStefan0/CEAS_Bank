@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  * Configuratia de securitate pentru aplicatia CEAS Bank
- *
+ * <p>
  * Aceasta clasa contine:
  * -Securitatea HTTP
  * -CORS
@@ -43,9 +43,9 @@ public class SecurityConfig {
 
     /**
      * Se creeaza regulile de securitate pentru cererile HTTP.
-     *  - Permite accesul public la anumite rute (ex: Swagger, signup, login)
-     *  - Necesita autentificare pentru restul rutelor
-     *  - Dezactiveaza CSRF si FrameOptions
+     * - Permite accesul public la anumite rute (ex: Swagger, signup, login)
+     * - Necesita autentificare pentru restul rutelor
+     * - Dezactiveaza CSRF si FrameOptions
      *
      * @param http obiectul HttpSecurity folosit pentru configurare
      * @return lantul de filtre de securitate

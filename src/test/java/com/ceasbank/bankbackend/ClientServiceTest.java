@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 
 /**
  * Teste unitare pentru clasa {@link ClientService}.
- *
+ * <p>
  * verifica comportamentul serviciului de gestionare a clientilor inclusiv
  * - inregistrarea unui client nou si crearea contului asociat
  * - tratarea cazului în care username-ul exista deja

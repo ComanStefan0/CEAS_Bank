@@ -13,12 +13,12 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserLoginDTO {
-        /**
-         * Username-ul clientului
-         */
-        private String username;
-        /**
-         * Parola asociata contului clientului.
-         */
-        private String password;
+    /**
+     * Username-ul clientului
+     */
+    private String username;
+    /**
+     * Parola asociata contului clientului.
+     */
+    private String password;
 }

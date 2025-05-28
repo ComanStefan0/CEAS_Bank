@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * Controller REST care gestioneaza operatiile legate clienti.
- *
+ * <p>
  * Include functionalitati pentru: obtinerea, adaugarea si stergerea unui client.
  * Toate rutele sunt accesibile prin prefixul /users.
  */

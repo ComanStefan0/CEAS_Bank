@@ -7,7 +7,7 @@ import lombok.*;
 
 /**
  * Entitate care reprezinta clientul bancar in sistem.
- *
+ * <p>
  * Fiecare client are informatii personale, credentiale de logare
  * si este asociat cu un cont bancar
  */
@@ -22,7 +22,7 @@ import lombok.*;
 public class Client {
 
     /**
-     * ID-ul unic al clientului. Este un generat automat.
+     * ID-ul unic al clientului. Este generat automat.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +37,7 @@ public class Client {
 
     /**
      * Contul bancar asociat clientului.
-     *
+     * <p>
      * Relatie unul la unul mapat invers din clasa {@link Account}
      * Se gestioneaza automat prin cascade si se elimina daca clientul este sters.
      */

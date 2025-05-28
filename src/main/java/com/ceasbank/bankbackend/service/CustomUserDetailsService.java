@@ -21,6 +21,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     /**
      * Cauta un client dupa username
+     *
      * @param username introdus la logare
      * @return un obiect UserDetails cu informatiile necesare autentificarii
      * @throws UsernameNotFoundException daca utilizatorul nu exista

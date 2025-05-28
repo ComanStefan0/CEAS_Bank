@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Controller responsabil de autentificarea utilizatorilor
- *
+ * <p>
  * Expune endpointul /login care primeste un username si o parola
  * si verifica daca acestea sunt valide
  */
@@ -30,6 +30,7 @@ public class LoginController {
 
     /**
      * Autentifica un utilizator pe baza credentialelor
+     *
      * @param userLoginDTO obiect care contine username-ul si parola introduse de utlizator
      * @return mesaj de succes daca autentificarea reuseste, sau mesaj de eroare daca nu functioneaza
      */

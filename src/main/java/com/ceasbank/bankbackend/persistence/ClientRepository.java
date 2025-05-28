@@ -1,4 +1,5 @@
 package com.ceasbank.bankbackend.persistence;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -6,7 +7,7 @@ import java.util.Optional;
 
 /**
  * Interfata pentru accesul la datele clientilor din database.
- *
+ * <p>
  * Extinde {@link JpaRepository} pentru a oferi functionalitati CRUD
  * si include o metoda personalizata pentru a cauta un client dupa username
  */

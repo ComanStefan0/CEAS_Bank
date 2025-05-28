@@ -7,7 +7,7 @@ import java.util.Optional;
 
 /**
  * Interfata pentru accesul la datele conturilor bancare.
- *
+ * <p>
  * Extinde {@link JpaRepository} pentru a oferi operatii CRUD implicite si metode personalizate
  */
 

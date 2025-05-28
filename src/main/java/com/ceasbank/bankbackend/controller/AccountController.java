@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * Controller REST care gestioneaza operatiile asupra conturilor bancare.
- *
+ * <p>
  * Toate rutele sunt prefixate cu /users/{clientId}/account.
  * Operatiile includ: obtinerea unui cont, actualizarea soldului si transferul de bani
  */
@@ -76,7 +76,7 @@ public class AccountController {
                     content = @Content)
     })
     @PutMapping("/{accountId}")
-    public Account accountOperation(@PathVariable("accountId") Long accountId, @RequestBody double amount ) {
+    public Account accountOperation(@PathVariable("accountId") Long accountId, @RequestBody double amount) {
 
         return accountService.accountOperation(accountId, amount);
     }
@@ -84,7 +84,7 @@ public class AccountController {
     /**
      * Se transfera bani de la un cont la altul.
      *
-     * @param senderId id-ul contului expeditor
+     * @param senderId  id-ul contului expeditor
      * @param destAccId id-ul contului destinatar (prin clientID in URL)
      * @param amount    suma de transferat
      * @return contul expeditor actualizat

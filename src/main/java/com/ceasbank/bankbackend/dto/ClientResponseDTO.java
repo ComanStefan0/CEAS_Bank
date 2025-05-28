@@ -4,7 +4,7 @@ import lombok.*;
 
 /**
  * DTO(Data Transfer Object) folosit pentru a returna informatiile unui client.
- *
+ * <p>
  * Acest obiect este utlizat in raspunsurile API-ului, fara a include date sensibile
  * precum username-ul sau parola
  */

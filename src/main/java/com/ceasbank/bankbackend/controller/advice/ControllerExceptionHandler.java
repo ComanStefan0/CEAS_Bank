@@ -18,8 +18,9 @@ public class ControllerExceptionHandler {
 
     /**
      * Gestioneaza exceptia {@link InsufficientBalanceException}
-     *
+     * <p>
      * Returneaza codul de stare 400 (Bad Request) cu mesajul exceptiei.
+     *
      * @param ex exceptia aruncata
      * @return raspuns HTTP cu mesajul de eroare
      */

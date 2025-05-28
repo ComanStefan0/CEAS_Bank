@@ -2,7 +2,7 @@ package com.ceasbank.bankbackend.exception;
 
 /**
  * Exceptie aruncata atunci cand se incearca inregistrarea unui client care exista deja in sistem
- *
+ * <p>
  * Este folosita pentru a preveni duplicatele de utilizatori in baza de date.
  */
 public class ClientAlreadyExistsException extends RuntimeException {

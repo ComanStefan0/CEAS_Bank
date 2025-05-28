@@ -7,7 +7,7 @@ import lombok.*;
 
 /**
  * Entitate care reprezinta un cont bancar asociat unui client.
- *
+ * <p>
  * Fiecare cont este legat de un singur client si contine un sold
  */
 
@@ -30,7 +30,7 @@ public class Account {
     private double balance;
     /**
      * Clientul asociat acestui cont.
-     *
+     * <p>
      * Fiecare cont apartine unui singur client.
      * Se foloseste {@link JsonBackReference} pentru a evita recursivitatea in serializare.
      */
