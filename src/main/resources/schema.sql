@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS Client (
     username VARCHAR(50) NOT NULL,
     password VARCHAR(255) NOT NULL,
     CONSTRAINT pk_utilizator PRIMARY KEY (id),
-    CONSTRAINT chk_cnp_length CHECK (LENGTH(cnp) = 13 AND cnp REGEXP '^[0-9]{16}$'),
+    CONSTRAINT chk_cnp_length CHECK (LENGTH(cnp) = 13 AND cnp REGEXP '^[0-9]{13}$'),
     CONSTRAINT uk_cnp UNIQUE (cnp)
     );
 
